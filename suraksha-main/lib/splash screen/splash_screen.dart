@@ -11,11 +11,23 @@ class splashScreen extends StatefulWidget {
   State<splashScreen> createState() => _splashScreenState();
 }
 
-class _splashScreenState extends State<splashScreen> {
+class _splashScreenState extends State<splashScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation sizedanimation;
   @override
   void initState() {
-    gotohome();
     super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+    sizedanimation =
+        Tween<double>(begin: 50.0, end: 150.0).animate(_controller);
+    _controller.forward();
+    _controller.addListener(() {
+      setState(() {});
+    });
+    _controller.repeat;
+    gotohome();
   }
 
   @override
@@ -30,10 +42,13 @@ class _splashScreenState extends State<splashScreen> {
                 Color.fromARGB(246, 168, 174, 180),
               ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         ),
+
+        // AnimatedContainer(
+        //     height: 200, width: 200, duration: Duration(seconds: 3))
         Center(
           child: SizedBox(
-            height: 200,
-            width: 200,
+            height: sizedanimation.value,
+            width: sizedanimation.value,
             child: Image.asset("image/azlogobgr.png"),
           ),
         )
@@ -42,8 +57,8 @@ class _splashScreenState extends State<splashScreen> {
   }
 
   Future<void> gotohome() async {
-   await Future.delayed(Duration(seconds: 3));
-     Navigator.of(context)
+    await Future.delayed(Duration(seconds: 3));
+    Navigator.of(context)
         .push(MaterialPageRoute(builder: (ctx) => const homepage()));
   }
 }
