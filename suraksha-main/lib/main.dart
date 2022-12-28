@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:suraksha/splash.dart';
+import 'package:suraksha/splash%20screen/splash_screen.dart';
 
 void main() {
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: splash()));
+  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: splashScreen()));
 }
