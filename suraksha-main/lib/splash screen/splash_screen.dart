@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:suraksha/main%20login%20page/login_page.dart';
 
 import '../main login page/home page.dart';
 
@@ -21,7 +23,7 @@ class _splashScreenState extends State<splashScreen>
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
     sizedanimation =
-        Tween<double>(begin: 50.0, end: 150.0).animate(_controller);
+        Tween<double>(begin: 50.0, end: 200.0).animate(_controller);
     _controller.forward();
     _controller.addListener(() {
       setState(() {});
@@ -32,6 +34,7 @@ class _splashScreenState extends State<splashScreen>
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 5.0;
     return Scaffold(
       body: Stack(children: [
         Container(
@@ -49,7 +52,8 @@ class _splashScreenState extends State<splashScreen>
           child: SizedBox(
             height: sizedanimation.value,
             width: sizedanimation.value,
-            child: Image.asset("image/azlogobgr.png"),
+            child: Hero(
+                tag: "logo image", child: Image.asset("image/azlogobgr.png")),
           ),
         )
       ]),
@@ -57,8 +61,30 @@ class _splashScreenState extends State<splashScreen>
   }
 
   Future<void> gotohome() async {
-    await Future.delayed(Duration(seconds: 3));
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const homepage()));
+    await Future.delayed(Duration(seconds: 4));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => Scaffold(
+              body: Stack(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                        color: Color.fromARGB(246, 128, 39, 24),
+                        gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(248, 130, 10, 146),
+                              Color.fromARGB(246, 168, 174, 180),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter)),
+                  ),
+                  Hero(
+                      tag: "logo image",
+                      child: Image.asset(
+                        "image/azlogobgr.png",
+                        width: 70,
+                      ))
+                ],
+              ),
+            )));
   }
 }
