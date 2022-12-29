@@ -15,20 +15,10 @@ class splashScreen extends StatefulWidget {
 
 class _splashScreenState extends State<splashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation sizedanimation;
+  
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
-    sizedanimation =
-        Tween<double>(begin: 50.0, end: 200.0).animate(_controller);
-    _controller.forward();
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.repeat;
     gotohome();
   }
 
@@ -50,8 +40,10 @@ class _splashScreenState extends State<splashScreen>
         //     height: 200, width: 200, duration: Duration(seconds: 3))
         Center(
           child: SizedBox(
-            height: sizedanimation.value,
-            width: sizedanimation.value,
+            // height: sizedanimation.value,
+            // width: sizedanimation.value,
+            height: 150,
+            width: 150,
             child: Hero(
                 tag: "logo image", child: Image.asset("image/azlogobgr.png")),
           ),
@@ -61,9 +53,11 @@ class _splashScreenState extends State<splashScreen>
   }
 
   Future<void> gotohome() async {
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (ctx) => Scaffold(
+        builder: (ctx) => WillPopScope(
+            onWillPop: () => Future.value(false),
+            child: Scaffold(
               body: Stack(
                 children: [
                   Container(
@@ -79,12 +73,66 @@ class _splashScreenState extends State<splashScreen>
                   ),
                   Hero(
                       tag: "logo image",
-                      child: Image.asset(
-                        "image/azlogobgr.png",
-                        width: 70,
-                      ))
+                      child: SizedBox(
+                        width: 500,
+                        height: 500,
+                        child: Center(
+                          child: Image.asset(
+                            "image/azlogobgr.png",
+                            width: 80,
+                          ),
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 300, 0, 0),
+                    child: Center(
+                      child: Column(
+                          children:  [
+                            Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                      prefixIcon: Icon(
+                                        Icons.person,
+                                        color:
+                                            Color.fromARGB(248, 130, 10, 146),
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12))),
+                                      labelText: 'Username',
+                                      hintText: 'Enter Your Username')),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                      prefixIcon: Icon(
+                                        Icons.password,
+                                        color:
+                                            Color.fromARGB(248, 130, 10, 146),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                        borderSide: BorderSide(
+                                            width: 3,
+                                            color: Color.fromARGB(
+                                                255, 163, 105, 240)),
+                                      ),
+                                      labelText: 'Password',
+                                      hintText: 'Enter Your Password')),
+                            ),
+                            ElevatedButton(onPressed: () {} ,style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.purple
+                            ), child: Text("Submit",
+                            selectionColor: Color.fromARGB(248, 252, 252, 252),))
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
-            )));
+            ))));
   }
 }
