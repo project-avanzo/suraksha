@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:suraksha/landing%20page/landing_page.dart';
 import 'package:suraksha/main%20login%20page/login_page.dart';
 
 import '../main login page/home page.dart';
@@ -15,6 +18,7 @@ class splashScreen extends StatefulWidget {
 
 class _splashScreenState extends State<splashScreen>
     with TickerProviderStateMixin {
+      String _string= "SURAKSHA";
   
   @override
   void initState() {
@@ -24,7 +28,7 @@ class _splashScreenState extends State<splashScreen>
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 5.0;
+    timeDilation = 10.0;
     return Scaffold(
       body: Stack(children: [
         Container(
@@ -47,7 +51,14 @@ class _splashScreenState extends State<splashScreen>
             child: Hero(
                 tag: "logo image", child: Image.asset("image/azlogobgr.png")),
           ),
-        )
+        ),
+        // Center(
+        //   child: TweenAnimationBuilder(builder: (BuildContext context, Int value, Widget child) {
+        //     return Text(_string.substring(0,value));
+        //     }, duration: const Duration(seconds: 3), tween: IntTween(begin: 0,end:_string.length),
+
+        //   ),
+        // )
       ]),
     );
   }
@@ -88,7 +99,7 @@ class _splashScreenState extends State<splashScreen>
                     child: Center(
                       child: Column(
                           children:  [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: TextField(
                                   decoration: InputDecoration(
@@ -103,7 +114,7 @@ class _splashScreenState extends State<splashScreen>
                                       labelText: 'Username',
                                       hintText: 'Enter Your Username')),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: TextField(
                                   decoration: InputDecoration(
@@ -123,9 +134,14 @@ class _splashScreenState extends State<splashScreen>
                                       labelText: 'Password',
                                       hintText: 'Enter Your Password')),
                             ),
-                            ElevatedButton(onPressed: () {} ,style: ElevatedButton.styleFrom(
+                            ElevatedButton(onPressed: () {
+                              Navigator.pushReplacement(context, MaterialPageRoute(
+                                builder: ((context) =>WillPopScope(
+            onWillPop: () => Future.value(false),
+            child:const landingPage()))));
+                            } ,style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.purple
-                            ), child: Text("Submit",
+                            ), child: const Text("Submit",
                             selectionColor: Color.fromARGB(248, 252, 252, 252),))
                           ],
                         ),
